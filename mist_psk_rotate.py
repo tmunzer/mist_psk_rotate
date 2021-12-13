@@ -23,7 +23,7 @@ import sys
 
 
 #######################################################################################################################################
-#### SMTP CONFIG 
+#### SMTP CONFIG
 def _load_smtp(verbose):
     smtp_config = {
         "enabled": os.environ.get("MIST_SMTP_ENABLED", default=False),
