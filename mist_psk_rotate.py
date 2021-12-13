@@ -26,16 +26,16 @@ import sys
 #### SMTP CONFIG
 def _load_smtp(verbose):
     smtp_config = {
-        "enabled": os.environ.get("MIST_SMTP_ENABLED", default=False),
+        "enabled": eval(os.environ.get("MIST_SMTP_ENABLED", default=False)),
         "host": os.environ.get("MIST_SMTP_HOST", default=None),
         "port": os.environ.get("MIST_SMTP_PORT", default=587),
-        "use_ssl": os.environ.get("MIST_SMTP_SSL", default=True),
+        "use_ssl": eval(os.environ.get("MIST_SMTP_SSL", default=True)),
         "username": os.environ.get("MIST_SMTP_USER", default=None),
         "password": os.environ.get("MIST_SMTP_PASSWORD", default=None),
         "from_name": os.environ.get("MIST_SMTP_FROM_NAME", default="Wi-Fi Access"),
         "from_email": os.environ.get("MIST_SMTP_FROM_EMAIL", default=None),
         "logo_url": os.environ.get("MIST_SMTP_LOGO_URL", default="https://cdn.mist.com/wp-content/uploads/logo.png"),
-        "enable_qrcode": os.environ.get("MIST_SMTP_QRCODE", default=True)
+        "enable_qrcode": eval(os.environ.get("MIST_SMTP_QRCODE", default=True))
     }    
     if (smtp_config["enabled"]):
         mist_smtp = Mist_SMTP(smtp_config)
