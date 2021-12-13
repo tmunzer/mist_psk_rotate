@@ -183,8 +183,6 @@ def _run(check):
 
 def usage():
     print("""
-Python Script to rotate Mist PSK.
-Written by Thomas Munzer (tmunzer@juniper.net)
 ---
 Usage:
 -c, --check         Check the configuration file only and display the values 
@@ -221,6 +219,13 @@ MIST_PSK_RECIPIENTS = user.1@myserver.com,user.2@myserver.com
     """)
 
 def main():    
+    print("""
+
+Python Script to rotate Mist PSK.
+Written by Thomas Munzer (tmunzer@juniper.net)
+Github: https://github.com/tmunzer/mist_psk_rotate
+
+""")
     try:
         opts, args = getopt.getopt(sys.argv[1:], "ce:ah", ["check", "env=", "all", "help"])
     except getopt.GetoptError as err:
@@ -254,13 +259,10 @@ def main():
     else: 
         _run(check)
 
+#######################################################################################################################################
+#######################################################################################################################################
+############################################# ENTRYPOINT
+#######################################################################################################################################
 if __name__=="__main__":
         main()
 
-
-exit(0)
-"""
-for psk in psks:
-    mist_lib.requests.sites.psks.delete(mist, site_id, psk_id=psk['id'])
-print(mist_lib.requests.sites.psks.get(mist, site_id)['result'])
-"""
