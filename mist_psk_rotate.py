@@ -104,7 +104,7 @@ def _load_psk(verbose):
         "length": int(os.environ.get("MIST_PSK_LENGTH", default=12)),
         "allowed_chars": os.environ.get("MIST_PSK_ALLOWED_CHARS", default="abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"),
         "recipients": os.environ.get("MIST_PSK_RECIPIENTS","").split(",")
-    }
+    }    
 
     if verbose:
         print("".ljust(80, "-"))

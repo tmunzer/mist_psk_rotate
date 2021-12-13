@@ -30,16 +30,15 @@ class Mist_SMTP():
         #     return False
 
     def send_psk(self, psk: str, ssid: str, recipients):
-        if len(recipients) == 1:
-            recipients = recipients[0]
-        else:
-            recipients = ", ".join(recipients)
+        # if len(recipients) == 1:
+        #     recipients = recipients[0]
+        # else:
+        #     recipients = ",".join(recipients)
 
         msg = MIMEMultipart('alternative')
         msg["Subject"] = "New Wi-Fi access code"
         msg["From"] = "{0} <{1}>".format(self.smtp_config["from_name"], self.smtp_config["from_email"])
-        msg["To"] = recipients
-
+        
         qr_info = "You can also scan the QRCode below to configure your device:"
         qr_html = get_qrcode_as_html(ssid, psk) 
 
@@ -49,4 +48,8 @@ class Mist_SMTP():
         msg_body = MIMEText(html, "html")
         msg.attach(msg_body)
 
-        return self._send_email(recipients, msg.as_string(), "Sending email ".ljust(79, "."))
+        for recipient in recipients:
+            msg["To"] = recipient
+            self._send_email(recipient, msg.as_string(), "Sending email to {0} ".format(recipient).ljust(79, "."))
+        return 
+
