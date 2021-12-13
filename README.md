@@ -32,8 +32,8 @@ SOFTWARE.
 4. If configured, the script will send the new PSK to the administrator(s)
 
 <div>
-<img src="https://github.com/tmunzer/mist_psk_rotate/raw/main/._readme/img/rotate.png" width="50%">
-<img src="https://github.com/tmunzer/mist_psk_rotate/raw/main/._readme/img/email.png" width="50%">
+<img src="https://github.com/tmunzer/mist_psk_rotate/raw/main/._readme/img/rotate.png" width="45%">
+<img src="https://github.com/tmunzer/mist_psk_rotate/raw/main/._readme/img/email.png" width="45%">
 </div>
 
 ## How to use it?
