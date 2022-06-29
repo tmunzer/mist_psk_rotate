@@ -39,6 +39,8 @@ def _load_smtp(verbose):
     }    
     if (smtp_config["enabled"]):
         mist_smtp = Mist_SMTP(smtp_config)
+    else:
+        mist_smtp = None
 
     if verbose:
         print("".ljust(80, "-"))
@@ -70,19 +72,19 @@ def _load_mist(verbose):
     }
     if not mist_config["host"]: 
         print("ERROR: Missing the MIST HOST")
-        exit(1)
+        sys.exit(1)
     if not mist_config["api_token"]: 
         print("ERROR: Missing the API TOKEN")
-        exit(1)
+        sys.exit(1)
     if not mist_config["scope"]: 
         print("ERROR: Missing the SCOPE")
-        exit(1)
+        sys.exit(1)
     if not mist_config["scope_id"]: 
         print("ERROR: Missing the scope_id")
-        exit(1)
+        sys.exit(1)
     if not mist_config["wlan_id"]: 
         print("ERROR: Missing the wlan_id")
-        exit(1)
+        sys.exit(1)
 
     if verbose:
         print("".ljust(80, "-"))
@@ -130,7 +132,7 @@ def _generate_psk(psk_config):
         return  psk
     except:
         print('\033[31m\u2716\033[0m')
-        exit(255)
+        sys.exit(255)
 
 def _update_psk(mist_config, psk):
     headers = {
@@ -140,15 +142,19 @@ def _update_psk(mist_config, psk):
     try:
         print("Retrieving current WLAN configuration ".ljust(79, "."), end="", flush=True)
         wlan = requests.get(url, headers=headers)   
+        if (wlan.status_code != 200):
+            raise
         auth = wlan.json().get("auth")  
         ssid = wlan.json().get("ssid")
         print("\033[92m\u2714\033[0m")        
     except:
         print('\033[31m\u2716\033[0m')
+        if wlan.json():
+            print(wlan.json())
     try: 
         print("Updating WLAN PSK configuration ".ljust(79, "."), end="", flush=True)
         auth["psk"]=psk
-        wlan = requests.put(url, headers=headers, json={"auth": auth})   
+        wlan = requests.put(url, headers=headers, json={"auth": auth})
         if (wlan.status_code == 200):
             print("\033[92m\u2714\033[0m") 
             print("Validating the configuration change ".ljust(79, "."), end="", flush=True)
@@ -177,7 +183,7 @@ def _run(check):
         print("New Turn - {0}".format(datetime.now().ctime()).center(80))
         psk = _generate_psk(psk_config)
         ssid = _update_psk(mist_config, psk)
-        if ssid:
+        if ssid and mist_smtp:
             mist_smtp.send_psk(psk,ssid, psk_config["recipients"] )
 
 
