@@ -10,7 +10,6 @@ Github repository: https://github.com/tmunzer/Mist_library/
 import requests
 import random
 
-from requests.api import get
 from mist_smtp.mist_smtp import Mist_SMTP
 from datetime import datetime
 import os
@@ -256,7 +255,7 @@ Github: https://github.com/tmunzer/mist_psk_rotate
             assert False, "unhandled option"
   
     if env_file:
-        load_dotenv(dotend_path=env_file)
+        load_dotenv(dotenv_path=env_file)
     else:
         load_dotenv()
 
