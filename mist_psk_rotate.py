@@ -1,6 +1,57 @@
 '''
-Written by Thomas Munzer (tmunzer@juniper.net)
-Github repository: https://github.com/tmunzer/Mist_library/
+-------------------------------------------------------------------------------
+
+    Written by Thomas Munzer (tmunzer@juniper.net)
+    Github repository: https://github.com/tmunzer/mist_psk_rotate
+
+    This script is licensed under the MIT License.
+    https://github.com/tmunzer/mist_psk_rotate/blob/main/LICENSE
+
+-------------------------------------------------------------------------------
+Python script designed to help Mist administrators to rotate WLAN PSK. 
+It is designed to be manualy started or as a CRON job.
+
+-------
+Requirements:
+qrcode[pil]
+requests
+python-dotenv
+certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
+
+-------
+Usage:
+-c, --check         Check the configuration file only and display the values 
+                    (passowrds and tokens are not shown)
+
+-e, --env=file      Configuration file location. By default the script
+                    is looking for a ".env" file in the script root folder
+
+-a, --all           Check the configuration file (-c) and run the script
+
+-------
+Environment Variable examples:
+
+MIST_SMTP_ENABLED = True
+MIST_SMTP_HOST = "smtp.myserver.com"
+MIST_SMTP_PORT = 587
+MIST_SMTP_SSL = True
+MIST_SMTP_USER = "my.user"
+MIST_SMTP_PASSWORD = "xxxxxxxxxxxxxxxx"
+MIST_SMTP_FROM_NAME = "Wi-Fi Access"
+MIST_SMTP_FROM_EMAIL = "my.user@myserver.com"
+MIST_SMTP_LOGO_URL = "https://cdn.mist.com/wp-content/uploads/logo.png"
+MIST_SMTP_QRCODE = True
+
+MIST_HOST = "api.mist.com"
+MIST_API_TOKEN = "xxxxxxxxxxxxxxxxx"
+MIST_SCOPE = "org" # site or org
+MIST_SCOPE_ID = "xxxxxxxxxxxxxx" # site_id or org_id depending on the scope
+MIST_WLAN_ID = "xxxxxxxxxxxxxx"
+
+MIST_PSK_LENGTH = "12"
+MIST_PSK_ALLOWED_CHARS = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+
+MIST_PSK_RECIPIENTS = user.1@myserver.com,user.2@myserver.com
 '''
 
 #######################################################################################################################################
@@ -188,7 +239,27 @@ def _run(check):
 
 def usage():
     print("""
----
+'''
+-------------------------------------------------------------------------------
+
+    Written by Thomas Munzer (tmunzer@juniper.net)
+    Github repository: https://github.com/tmunzer/mist_psk_rotate
+
+    This script is licensed under the MIT License.
+    https://github.com/tmunzer/mist_psk_rotate/blob/main/LICENSE
+
+-------------------------------------------------------------------------------
+Python script designed to help Mist administrators to rotate WLAN PSK. 
+It is designed to be manualy started or as a CRON job.
+
+-------
+Requirements:
+qrcode[pil]
+requests
+python-dotenv
+certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
+
+-------
 Usage:
 -c, --check         Check the configuration file only and display the values 
                     (passowrds and tokens are not shown)
@@ -198,8 +269,9 @@ Usage:
 
 -a, --all           Check the configuration file (-c) and run the script
 
----
-Configuration file example:
+-------
+Environment Variable examples:
+
 MIST_SMTP_ENABLED = True
 MIST_SMTP_HOST = "smtp.myserver.com"
 MIST_SMTP_PORT = 587
@@ -221,6 +293,7 @@ MIST_PSK_LENGTH = "12"
 MIST_PSK_ALLOWED_CHARS = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 MIST_PSK_RECIPIENTS = user.1@myserver.com,user.2@myserver.com
+'''
     """)
 
 def main():    
